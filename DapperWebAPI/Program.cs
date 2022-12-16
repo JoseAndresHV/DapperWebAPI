@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
