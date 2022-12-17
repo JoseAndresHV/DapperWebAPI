@@ -1,5 +1,5 @@
 # DapperWebAPI
-An `ASP.NET Core 6.0` `Web API` project with an `MS SQL Server` Database using `Dapper` as micro ORM. There is a `CRUD` for each of the following entities: products, categories, and suppliers from the Northwind Microsoft sample database. 
+An `ASP.NET Core 6.0` `Web API` project with an `MS SQL Server` Database using `Dapper` as micro ORM. There is a `CRUD` for each of the following entities: products, categories, and suppliers from the Microsoft `Northwind` database. 
 
 ### Highlights
 - Repository Pattern
