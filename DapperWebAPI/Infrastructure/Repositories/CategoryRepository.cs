@@ -59,6 +59,39 @@ namespace DapperWebAPI.Infrastructure.Repositories
             return result;
         }
 
+        public async Task<Category?> GetByIdWithProducts(int id)
+        {
+            var sql = @"select *
+                        from Categories c
+                        left join Products p
+                        on c.CategoryID = p.CategoryID
+                        where c.CategoryID = @CategoryID";
+            using var connection = new SqlConnection(_connectionString);
+            var dictionary = new Dictionary<int, Category>();
+            connection.Open();
+            var result = await connection.QueryAsync<Category, Product, Category>(
+                sql,
+                (category, product) =>
+                {
+                    if (!dictionary.TryGetValue(category.CategoryID, out Category? entry))
+                    {
+                        entry = category;
+                        entry.Products ??= new List<Product>();
+                        dictionary.Add(category.CategoryID, entry);
+                    }
+
+                    if (product is not null)
+                    {
+                        entry.Products!.Add(product);
+                    }
+                    return entry;
+                },
+                param: new { CategoryID = id },
+                splitOn: "ProductID");
+
+            return result.FirstOrDefault();
+        }
+
         public async Task<bool> Update(Category entity)
         {
             var sql = @"update Categories set CategoryName = @CategoryName, 
