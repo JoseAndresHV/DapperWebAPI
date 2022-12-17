@@ -6,7 +6,7 @@
         public string ProductName { get; set; } = null!;
         public int? SupplierID { get; set; }
         public int? CategoryID { get; set; }
-        public int? QuantityPerUnit { get; set; }
+        public string? QuantityPerUnit { get; set; }
         public decimal? UnitPrice { get; set; }
         public int? UnitsInStock { get; set; }
         public int? UnitsOnOrder { get; set; }
