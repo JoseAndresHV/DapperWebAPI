@@ -18,7 +18,8 @@ namespace DapperWebAPI.Infrastructure.Repositories
 
         public async Task<bool> Add(Category entity)
         {
-            var sql = "insert into Categories values (@CategoryID, @CategoryName, @Description, @Picture)";
+            var sql = @"insert into Categories (CategoryName, Description, Picture)
+                        values (@CategoryName, @Description, @Picture)";
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
             var result = await connection.ExecuteAsync(sql, entity);
@@ -28,7 +29,8 @@ namespace DapperWebAPI.Infrastructure.Repositories
 
         public async Task<bool> Delete(int id)
         {
-            var sql = "delete from Categories where CategoryID = @CategoryID";
+            var sql = @"delete from Categories 
+                        where CategoryID = @CategoryID";
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
             var result = await connection.ExecuteAsync(sql, new { CategoryID = id });
@@ -38,7 +40,7 @@ namespace DapperWebAPI.Infrastructure.Repositories
 
         public async Task<IEnumerable<Category>> GetAll()
         {
-            var sql = "select * from Categories";
+            var sql = @"select * from Categories";
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
             var result = await connection.QueryAsync<Category>(sql);
@@ -48,7 +50,8 @@ namespace DapperWebAPI.Infrastructure.Repositories
 
         public async Task<Category?> GetById(int id)
         {
-            var sql = "select * from Categories where CategoryID = @CategoryID";
+            var sql = @"select * from Categories 
+                        where CategoryID = @CategoryID";
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
             var result = await connection.QuerySingleOrDefaultAsync<Category>(sql, new { CategoryID = id });
@@ -58,7 +61,9 @@ namespace DapperWebAPI.Infrastructure.Repositories
 
         public async Task<bool> Update(Category entity)
         {
-            var sql = "update Categories set CategoryID = @CategoryID, CategoryName = @CategoryName, Description = @Description, Picture = @Picture where CategoryID = @CategoryID";
+            var sql = @"update Categories set CategoryName = @CategoryName, 
+                        Description = @Description, Picture = @Picture 
+                        where CategoryID = @CategoryID";
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
             var result = await connection.ExecuteAsync(sql, entity);
