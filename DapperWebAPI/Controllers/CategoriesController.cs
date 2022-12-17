@@ -33,6 +33,18 @@ namespace DapperWebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("products/{id}")]
+        public async Task<ActionResult<Category?>> GetWithProducts(int id)
+        {
+            var result = await _unitOfWork.Categories.GetByIdWithProducts(id);
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Category entity)
         {
